@@ -18,13 +18,6 @@
 
 <br />
 
-<!-- 
-  NOTE: Add your actual project GIF here! 
-  Recommended size: 800px width.
--->
-<div align="center">
-  <img src="https://via.placeholder.com/800x450/1a1a2e/ffffff?text=Add+Project+Demo+GIF+Here" alt="iLEO Demo" style="border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1);">
-</div>
 
 <br />
 
@@ -92,14 +85,6 @@
 <br />
 
 ## 💻 The Dashboard Experience
-
-<!-- 
-  NOTE: Add screenshots of your dashboard here!
--->
-<div style="display: flex; gap: 20px; justify-content: center;">
-  <img src="https://via.placeholder.com/400x250/f8f9fa/333333?text=Authentication+View" alt="Auth View" width="48%">
-  <img src="https://via.placeholder.com/400x250/f8f9fa/333333?text=Dashboard+Config" alt="Dashboard View" width="48%">
-</div>
 
 Project administrators can log into the secure dashboard via Passwordless Magic Links to:
 1. Configure the AI's persona and operating parameters.
