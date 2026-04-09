@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dar El Manar — Agence Immobilière Tunis</title>
+  <meta name="description" content="Dar El Manar — Votre agence immobilière de confiance à Tunis. Appartements, villas et terrains à vendre et à louer.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Base ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #f8f9fb;
+      color: #1a1a2e;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; border-radius: 10px; }
+
+    /* ── Colors ─────────────────────────────────────────────────── */
+    :root {
+      --primary: #1D9E75;
+      --primary-dark: #15805e;
+      --primary-light: #e8f7f1;
+      --accent: #f59e0b;
+      --surface: #ffffff;
+      --text-1: #1a1a2e;
+      --text-2: #64748b;
+      --text-3: #94a3b8;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+
+    /* ── Navbar ─────────────────────────────────────────────────── */
+    .navbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--primary);
+    }
+    .navbar-brand .icon {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+    }
+    .navbar-links {
+      display: flex;
+      gap: 28px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+    .navbar-links a:hover { color: var(--primary); }
+    .navbar-cta {
+      background: var(--primary);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .navbar-cta:hover { background: var(--primary-dark); }
+
+    /* ── Hero ───────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #0f3d2e 0%, #1D9E75 50%, #16a085 100%);
+      color: white;
+      padding: 80px 24px 60px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .hero p {
+      font-size: clamp(15px, 2.5vw, 18px);
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto 32px;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      text-align: center;
+    }
+    .hero-stat .number {
+      font-size: 32px;
+      font-weight: 800;
+      display: block;
+    }
+    .hero-stat .label {
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
+    /* ── Section ────────────────────────────────────────────────── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    .section-title {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text-1);
+    }
+    .section-subtitle {
+      font-size: 15px;
+      color: var(--text-2);
+      margin-bottom: 36px;
+    }
+
+    /* ── Property Cards ────────────────────────────────────────── */
+    .properties-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .property-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .property-card:hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+      transform: translateY(-4px);
+    }
+    .property-img {
+      height: 200px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .property-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: var(--primary);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .property-badge.rent {
+      background: var(--accent);
+      color: #1a1a2e;
+    }
+    .property-body {
+      padding: 18px 20px 20px;
+    }
+    .property-type {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .property-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+    .property-location {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .property-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text-3);
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .property-meta span { display: flex; align-items: center; gap: 4px; }
+    .property-price {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .property-price .unit {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+    }
+
+    /* ── Contact ────────────────────────────────────────────────── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+    }
+    .contact-card .icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+    .contact-card h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+    .contact-card p {
+      font-size: 13px;
+      color: var(--text-2);
+    }
+
+    /* ── Footer ─────────────────────────────────────────────────── */
+    .footer {
+      background: #0f3d2e;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 13px;
+    }
+    .footer strong { color: white; }
+
+    /* ── Powered by badge ──────────────────────────────────────── */
+    .powered-by {
+      position: fixed;
+      bottom: 24px;
+      left: 20px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 11px;
+      color: var(--text-2);
+      z-index: 9990;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .powered-by strong { color: var(--primary); font-weight: 700; }
+
+    /* ── Responsive ─────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .navbar-links { display: none; }
+      .hero { padding: 56px 20px 40px; }
+      .hero-stats { gap: 20px; }
+      .properties-grid { grid-template-columns: 1fr; }
+      .powered-by { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ─────────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="icon">🏠</div>
+      Dar El Manar
+    </div>
+    <div class="navbar-links">
+      <a href="#listings">Nos Biens</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="navbar-cta">Nous Contacter</a>
+  </nav>
+
+  <!-- ── Hero ──────────────────────────────────────────────────── -->
+  <section class="hero">
+    <h1>Trouvez votre bien immobilier<br>à Tunis</h1>
+    <p>Agence immobilière de confiance depuis 2015. Appartements, villas et terrains — vente et location dans le Grand Tunis.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="number">120+</span>
+        <span class="label">Biens disponibles</span>
+      </div>
+      <div class="hero-stat">
+        <span class="number">350+</span>
+        <span class="label">Clients satisfaits</span>
+      </div>
+      <div class="hero-stat">
+        <span class="number">8</span>
+        <span class="label">Ans d'expérience</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Listings ──────────────────────────────────────────────── -->
+  <section class="section" id="listings">
+    <h2 class="section-title">Nos Biens à la Une</h2>
+    <p class="section-subtitle">Les meilleures opportunités du moment dans le Grand Tunis</p>
+
+    <div class="properties-grid">
+
+      <!-- Property 1 -->
+      <div class="property-card">
+        <div class="property-img" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&h=400&fit=crop');">
+          <span class="property-badge">À vendre</span>
+        </div>
+        <div class="property-body">
+          <div class="property-type">Appartement S+2</div>
+          <div class="property-title">Résidence Les Jasmins — Lac 2</div>
+          <div class="property-location">📍 Les Berges du Lac 2, Tunis</div>
+          <div class="property-meta">
+            <span>🛏 2 chambres</span>
+            <span>🚿 1 SDB</span>
+            <span>📐 95 m²</span>
+          </div>
+          <div class="property-price">285 000 TND</div>
+        </div>
+      </div>
+
+      <!-- Property 2 -->
+      <div class="property-card">
+        <div class="property-img" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&h=400&fit=crop');">
+          <span class="property-badge">À vendre</span>
+        </div>
+        <div class="property-body">
+          <div class="property-type">Villa S+4</div>
+          <div class="property-title">Villa El Yasmine — La Soukra</div>
+          <div class="property-location">📍 La Soukra, Ariana</div>
+          <div class="property-meta">
+            <span>🛏 4 chambres</span>
+            <span>🚿 2 SDB</span>
+            <span>📐 280 m²</span>
+          </div>
+          <div class="property-price">620 000 TND</div>
+        </div>
+      </div>
+
+      <!-- Property 3 -->
+      <div class="property-card">
+        <div class="property-img" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&h=400&fit=crop');">
+          <span class="property-badge rent">À louer</span>
+        </div>
+        <div class="property-body">
+          <div class="property-type">Appartement S+1</div>
+          <div class="property-title">Studio Meublé — Centre Ville</div>
+          <div class="property-location">📍 Avenue Habib Bourguiba, Tunis</div>
+          <div class="property-meta">
+            <span>🛏 1 chambre</span>
+            <span>🚿 1 SDB</span>
+            <span>📐 55 m²</span>
+          </div>
+          <div class="property-price">850 TND <span class="unit">/ mois</span></div>
+        </div>
+      </div>
+
+      <!-- Property 4 -->
+      <div class="property-card">
+        <div class="property-img" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&h=400&fit=crop');">
+          <span class="property-badge">À vendre</span>
+        </div>
+        <div class="property-body">
+          <div class="property-type">Villa S+3</div>
+          <div class="property-title">Villa Méditerranée — Gammarth</div>
+          <div class="property-location">📍 Gammarth, La Marsa</div>
+          <div class="property-meta">
+            <span>🛏 3 chambres</span>
+            <span>🚿 2 SDB</span>
+            <span>📐 210 m²</span>
+          </div>
+          <div class="property-price">890 000 TND</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Contact ───────────────────────────────────────────────── -->
+  <section class="section" id="contact" style="padding-bottom: 40px;">
+    <h2 class="section-title">Contactez-Nous</h2>
+    <p class="section-subtitle">Ou parlez directement à notre assistant dans le chat en bas à droite 👇</p>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="icon">📍</div>
+        <h4>Adresse</h4>
+        <p>45 Rue du Lac Léman<br>Les Berges du Lac 1, Tunis</p>
+      </div>
+      <div class="contact-card">
+        <div class="icon">📞</div>
+        <h4>Téléphone</h4>
+        <p>+216 71 123 456</p>
+      </div>
+      <div class="contact-card">
+        <div class="icon">💬</div>
+        <h4>WhatsApp</h4>
+        <p>+216 55 123 456</p>
+      </div>
+      <div class="contact-card">
+        <div class="icon">🕐</div>
+        <h4>Horaires</h4>
+        <p>Lun – Ven: 9h – 18h<br>Sam: 9h – 13h</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ────────────────────────────────────────────────── -->
+  <footer class="footer">
+    © 2026 <strong>Dar El Manar</strong> — Agence Immobilière. Tous droits réservés.<br>
+    <span style="font-size: 11px; opacity: 0.6;">Page de démonstration — Agence fictive</span>
+  </footer>
+
+  <!-- ── Powered by iLEO ────────────────────────────────────── -->
+  <div class="powered-by">
+    💬 Assistant propulsé par <strong>iLEO</strong>
+  </div>
+
+  <!-- ── iLEO widget ────────────────────────────────────────── -->
+  <!--
+    IMPORTANT: Replace the data-business-id below with the demo business widget_id.
+    For local dev: src="/widget.js"
+    For production: src="https://ileo-bot.vercel.app/widget.js"
+  -->
+  <script
+    src="/widget.js"
+    data-business-id="f35067cc-5d0f-4b97-aa63-e10f3c40bd60">
+  </script>
+</body>
+</html>

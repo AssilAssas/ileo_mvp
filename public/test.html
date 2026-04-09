@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>iLEO Widget — Test Page</title>
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; background: #f8f9fa; color: #333; padding: 40px; margin: 0; line-height: 1.6; }
+    .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    h1 { margin-top: 0; color: #1D9E75; font-size: 24px; }
+    p { margin-bottom: 20px; font-size: 15px; }
+    .card { background: #f1f5f9; padding: 20px; border-radius: 8px; font-size: 14px; border: 1px solid #e2e8f0; }
+    .warning { background: #fffbeb; color: #b45309; padding: 12px; border-radius: 6px; font-size: 13px; margin-top: 20px; border: 1px solid #fef3c7; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>iLEO Widget — Test Page</h1>
+    <p>You should see a green chat bubble in the bottom-right corner. Click it to open the assistant.</p>
+    
+    <div class="card">
+      <strong>Try asking the bot:</strong>
+      <ul style="margin-top: 10px; margin-bottom: 0; padding-left: 20px;">
+        <li><em>What time do you open?</em> (English)</li>
+        <li><em>Quelles sont vos heures d'ouverture?</em> (French)</li>
+        <li><em>وقتاش تفتحو؟</em> (Arabic)</li>
+        <li><em>chhal theure tefthou?</em> (Darija)</li>
+        <li><em>I want to schedule a visit</em> (triggers lead form)</li>
+      </ul>
+    </div>
+
+    <div class="warning">
+      ⚠️ <strong>Before testing:</strong> Replace <code>YOUR_WIDGET_ID_HERE</code> in the script tag below with the actual <code>widget_id</code> from your iLEO Dashboard, or from the <code>businesses</code> table in Supabase.
+    </div>
+  </div>
+
+  <!--
+    Replace YOUR_WIDGET_ID_HERE with the widget_id from your dashboard.
+    For local testing: src points to /widget.js (same origin).
+    For production: use https://yourdomain.vercel.app/widget.js
+  -->
+  <script
+    src="/widget.js"
+    data-business-id="f35067cc-5d0f-4b97-aa63-e10f3c40bd60">
+  </script>
+</body>
+</html>
