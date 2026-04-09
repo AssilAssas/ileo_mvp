@@ -127,15 +127,16 @@ export async function POST(req: NextRequest) {
     }
     globalStore.rateLimits.set(conversationId, now);
 
-    // Fetch previous messages for conversation history
+    // Fetch previous messages for conversation history (get the LAST 10 messages)
     const { data: pastMessages } = await supabaseAdmin
       .from('messages')
       .select('role, content')
       .eq('conversation_id', conversationId)
-      .order('created_at', { ascending: true })
+      .order('created_at', { ascending: false })
       .limit(10);
 
-    const history = (pastMessages || []).map(m => ({ role: m.role as 'user' | 'assistant' | 'system', content: m.content }));
+    // Reverse them back so they are chronological
+    const history = (pastMessages || []).reverse().map(m => ({ role: m.role as 'user' | 'assistant' | 'system', content: m.content }));
 
     // 2. Build system prompt — merge ALL knowledge_base rows + structured fields
     const knowledgeContent = (business.knowledge_base as any[] || [])
@@ -176,26 +177,21 @@ PROPERTY QUERIES:
 
 LEAD CAPTURE — USE SPARINGLY:
 Call the request_customer_contact tool ONLY when ALL of these are true:
-1. The visitor has shown CLEAR intent to buy, rent, or visit a property
-2. The conversation has progressed beyond a simple greeting or question
-3. The visitor explicitly says something like:
+1. The user's VERY LAST message contains a clear demand to be called, visited, or booked.
+2. The visitor explicitly says something like:
    - "I want to schedule a visit" / "Nheb nchof dar"
-   - "I'm interested in buying this" / "Nheb nchrih"
    - "Can you contact me?" / "Naatokom numeri?"
    - "I want to book an appointment" / "Nheb na3mel rendez-vous"
 
 Do NOT call the tool for:
+- Questions about properties (how many rooms? price? where is it?) -> JUST ANSWER THE QUESTION!
 - Greetings (bonjour, salam, hi, bnjour)
-- General questions (who are you, what do you do, where are you located)
 - Price inquiries without buying intent
-- Casual browsing questions
 
 STRICT RULES — never break these:
+- If the user asks a question about a property, DO NOT call the tool. Answer their question first.
 - NEVER invent listings, prices, availability, or details not in your knowledge base
-- NEVER give legal, notarial, or financial advice
-- NEVER mention competitors
 - If you don't know: "Je n'ai pas cette information, mais notre équipe peut vous répondre directement."
-- When you DO call the tool, also respond with a friendly message — do NOT only call the tool
 `;
 
     const messages: any[] = [
@@ -213,7 +209,7 @@ STRICT RULES — never break these:
           type: 'function',
           function: {
             name: 'request_customer_contact',
-            description: 'Call this ONLY when the user explicitly asks to schedule a visit, book an appointment, be contacted, or clearly states intent to buy/rent. NEVER call for greetings, general questions, price inquiries, or casual browsing.',
+            description: 'CRITICAL: DO NOT call this automatically. ONLY call this tool if the user EXPLICITLY asks to be contacted or book a visit in their VERY LAST message. If they are just asking questions about a property, DO NOT call this tool.',
             parameters: { type: 'object', properties: {} },
           },
         },
