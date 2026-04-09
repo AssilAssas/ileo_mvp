@@ -192,6 +192,14 @@ STRICT RULES — never break these:
 - If the user asks a question about a property, DO NOT call the tool. Answer their question first.
 - NEVER invent listings, prices, availability, or details not in your knowledge base
 - If you don't know: "Je n'ai pas cette information, mais notre équipe peut vous répondre directement."
+
+INSTRUCTIONS FOR THINKING (Chain of Thought):
+Before answering ANY message, you MUST write your internal reasoning inside <thinking> tags to avoid mistakes.
+1. Analyze the user's intent (Is it a greeting? A question? Do they want to book a visit? Are they asking about a location?).
+2. Check the BUSINESS KNOWLEDGE for the exact facts.
+3. If they ask for something you do NOT have (like an unknown location or missing price), tell yourself: "I do not have this info, I must tell them clearly without hallucinating."
+4. Determine if the request requires calling the request_customer_contact tool (only if they explicitly asked to book/be contacted).
+5. After the </thinking> tag, output ONLY your polished response directly to the user.
 `;
 
     const messages: any[] = [
@@ -219,7 +227,11 @@ STRICT RULES — never break these:
     });
 
     const responseMessage = response.choices[0].message;
-    let reply = responseMessage.content;
+    let rawReply = responseMessage.content || '';
+    
+    // P2-Fix: Strip <thinking> tags so the user never sees them
+    let reply = rawReply.replace(/<thinking>[\s\S]*?<\/thinking>\n*/gi, '').trim();
+    
     let action = null;
 
     if (responseMessage.tool_calls && responseMessage.tool_calls.length > 0) {
